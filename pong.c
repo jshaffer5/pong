@@ -1,6 +1,6 @@
 
 //Using libs SDL, glibc
-#include <SDL.h>	//SDL version 2.0
+#include <SDL2/SDL.h>	//SDL version 2.0
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -679,6 +679,7 @@ int main (int argc, char *args[]) {
 }
 
 int init(int width, int height, int argc, char *args[]) {
+
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 
@@ -709,7 +710,7 @@ int init(int width, int height, int argc, char *args[]) {
 		return 1;
 	}
 
-	//create the screen sruface where all the elemnts will be drawn onto (ball, paddles, net etc)
+	//create the screen surface where all the elemnts will be drawn onto (ball, paddles, net etc)
 	screen = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA32);
 	
 	if (screen == NULL) {
