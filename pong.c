@@ -695,7 +695,8 @@ int init(int width, int height, int argc, char *args[]) {
 		//Create window	
 		if(strcmp(args[i], "-f")) {
 			
-			SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN, &window, &renderer);
+			 SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN, &window, &renderer);
+			// SDL_CreateWindow()
 		
 		} else {
 		
@@ -710,8 +711,18 @@ int init(int width, int height, int argc, char *args[]) {
 		return 1;
 	}
 
+	// SDL_Log("The surface's pixelformat is %s", surfacePixelFormatName);
+
+
 	//create the screen surface where all the elemnts will be drawn onto (ball, paddles, net etc)
-	screen = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA32);
+	// screen = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELTYPE_UNKNOWN);
+	screen = SDL_CreateRGBSurface( 0, 640, 480, 32,
+												0x00FF0000,
+												0x0000FF00,
+												0x000000FF,
+												0xFF000000
+											);
+
 	
 	if (screen == NULL) {
 		
@@ -721,7 +732,10 @@ int init(int width, int height, int argc, char *args[]) {
 	}
 
 	//create the screen texture to render the screen surface to the actual display
-	screen_texture = SDL_CreateTextureFromSurface(renderer, screen);
+	// screen_texture = SDL_CreateTextureFromSurface(renderer, screen);
+	screen_texture = SDL_CreateTexture( renderer, SDL_PIXELFORMAT_ARGB8888, 
+													 SDL_TEXTUREACCESS_TARGET, 640, 480
+													); // SDL_PIXELFORMAT_UNKNOWN also works
 
 	if (screen_texture == NULL) {
 		
