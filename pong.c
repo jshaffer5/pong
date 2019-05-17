@@ -51,7 +51,7 @@ static void init_game() {
 	ball.w = 10;
 	ball.h = 10;
 	ball.dy = 1;
-	ball.dx = 1;
+	ball.dx = 2;
 	
 	paddle[0].x = 20;
 	paddle[0].y = screen->h / 2 - 50 ;
@@ -692,14 +692,15 @@ int main (int argc, char *args[]) {
 		//draw to the display
 		SDL_RenderPresent(renderer);
 				
-		//time it takes to render  frame in milliseconds
-		next_game_tick += 1000 / 60;
-		sleep = next_game_tick - SDL_GetTicks();
+		// //time it takes to render  frame in milliseconds
+		// next_game_tick += 1000 / 60;
+		// sleep = next_game_tick - SDL_GetTicks();
 	
-		if( sleep >= 0 ) {
+		// if( sleep >= 0 ) {
             				
-			SDL_Delay(sleep);
-		}
+		// 	SDL_Delay(sleep);
+		// }
+		SDL_Delay(16);
 	}
 
 	//free loaded images
