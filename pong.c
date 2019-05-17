@@ -29,6 +29,7 @@ static ball_t ball;
 static paddle_t paddle[2];
 int score[] = {0,0};
 int width, height;		//used if fullscreen
+int is_two_player_game = 0; 
 
 SDL_Window* window = NULL;	//The window we'll be rendering to
 SDL_Renderer *renderer;		//The renderer SDL will use to draw to the screen
@@ -310,6 +311,35 @@ static void move_paddle_ai() {
 	}
 }
 
+static void move_paddle_2(int d) {
+
+	// if the 's' key is pressed move paddle down
+	if (d == 0) {
+		
+		if(paddle[0].y >= screen->h - paddle[0].h) {
+		
+			paddle[0].y = screen->h - paddle[0].h;
+		
+		} else { 
+		
+			paddle[0].y += 5;
+		}
+	}
+	
+	// if the 'w' key is pressed move paddle up
+	if (d == 1) {
+
+		if(paddle[0].y <= 0) {
+		
+			paddle[0].y = 0;
+
+		} else {
+		
+			paddle[0].y -= 5;
+		}
+	}
+}
+
 static void move_paddle(int d) {
 
 	// if the down arrow is pressed move paddle down
@@ -558,6 +588,17 @@ int main (int argc, char *args[]) {
 		
 			quit = 1;
 		}
+
+		if (is_two_player_game == 1) {
+			if (keystate[SDL_SCANCODE_S]) {
+				move_paddle_2(0);
+			}
+
+			if (keystate[SDL_SCANCODE_W]) {
+			move_paddle_2(1);
+		}
+
+		}
 		
 		if (keystate[SDL_SCANCODE_DOWN]) {
 			
@@ -621,8 +662,10 @@ int main (int argc, char *args[]) {
 				state = 2;	
 			}
 
-			//paddle ai movement
-			move_paddle_ai();
+			if (is_two_player_game == 0) {
+				//paddle ai movement
+				move_paddle_ai();
+			}
 
 			//* Move the balls for the next frame. 
 			move_ball();
@@ -701,6 +744,14 @@ int init(int width, int height, int argc, char *args[]) {
 		} else {
 		
 			SDL_CreateWindowAndRenderer(SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP, &window, &renderer);
+		}
+
+	}
+
+	for (i=0; i<argc; i++) {
+		if(strcmp(args[i], "-2player") == 0) {
+			is_two_player_game = 1;
+			printf("2 player game!\n");
 		}
 	}
 
