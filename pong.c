@@ -621,6 +621,11 @@ int main (int argc, char *args[]) {
 				
 				state = 1;
 			}
+
+			if (keystate[SDL_SCANCODE_2]) {
+				is_two_player_game = 1;
+				state = 1;
+			}
 		
 			//draw menu 
 			draw_menu();
